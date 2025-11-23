@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diseño Detallado del Software — Sistema EDI-301</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 1.5rem 3rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    header {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    h1, h2, h3, h4 {
+      color: #222;
+    }
+    nav {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    nav li {
+      margin-bottom: 0.25rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0066cc;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      vertical-align: top;
+    }
+    th {
+      background-color: #eee;
+      font-weight: bold;
+      text-align: left;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background: #f4f4f4;
+      padding: 0 0.2rem;
+      border-radius: 3px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Diseño Detallado del Software — Sistema EDI-301</h1>
+  <p>Documento de Diseño Detallado (DDS)</p>
+</header>
+
+<nav>
+  <h2>Índice</h2>
+  <ul>
+    <li><a href="#sec1">1. INTRODUCTION</a>
+      <ul>
+        <li><a href="#sec1-1">1.1 Purpose</a></li>
+        <li><a href="#sec1-2">1.2 Scope</a></li>
+        <li><a href="#sec1-3">1.3 Overview</a></li>
+        <li><a href="#sec1-4">1.4 Reference Material</a></li>
+        <li><a href="#sec1-5">1.5 Definitions and Acronyms</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec2">2.0 SYSTEM OVERVIEW</a></li>
+    <li><a href="#sec3">3.0 SYSTEM ARCHITECTURE</a>
+      <ul>
+        <li><a href="#sec3-1">3.1 Architectural Design</a></li>
+        <li><a href="#sec3-2">3.2 Decomposition Description</a></li>
+        <li><a href="#sec3-3">3.3 Design Rationale</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec4">4.0 DATA DESIGN</a>
+      <ul>
+        <li><a href="#sec4-1">4.1 Data Description</a></li>
+        <li><a href="#sec4-2">4.2 Data Dictionary</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec5">5.0 COMPONENT DESIGN</a></li>
+    <li><a href="#sec6">6.0 HUMAN INTERFACE DESIGN</a>
+      <ul>
+        <li><a href="#sec6-1">6.1 Overview of User Interface</a></li>
+        <li><a href="#sec6-2">6.2 Screen Images</a></li>
+        <li><a href="#sec6-3">6.3 Screen Objects and Actions</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec7">7.0 REQUIREMENTS MATRIX</a></li>
+    <li><a href="#sec8">8.0 APPENDICES</a></li>
+  </ul>
+</nav>
+
+<section id="sec1">
+  <h2>1. INTRODUCTION</h2>
+
+  <section id="sec1-1">
+    <h3>1.1 Purpose</h3>
+    <p>
+      El propósito de este documento es describir detalladamente el diseño interno del sistema
+      <strong>EDI-301</strong>, incluyendo la estructura lógica, componentes funcionales, diseño de datos,
+      interfaces de usuario y la relación entre los elementos que conforman la solución.
+      Su objetivo es proporcionar una guía técnica completa que sirva como referencia para
+      desarrolladores, mantenedores y evaluadores del sistema.
+    </p>
+  </section>
+
+  <section id="sec1-2">
+    <h3>1.2 Scope</h3>
+    <p>
+      El documento cubre el diseño del sistema móvil (Android/iOS) desarrollado en
+      <strong>Flutter</strong> y su integración con el backend REST API construido con
+      <strong>Node.js/Express</strong> y <strong>SQL Server</strong>. Incluye las vistas, modelos,
+      flujos internos, estructuras de datos, endpoints de la API, reglas de negocio y diagramas
+      relevantes para la implementación.
+    </p>
+  </section>
+
+  <section id="sec1-3">
+    <h3>1.3 Overview</h3>
+    <p>
+      El sistema EDI-301 automatiza la gestión del programa institucional de familias EDI de la
+      Universidad Linda Vista, abarcando:
+    </p>
+    <ul>
+      <li>Autenticación y manejo de sesión.</li>
+      <li>Visualización de noticias.</li>
+      <li>Gestión de familias (miembros, roles, imágenes).</li>
+      <li>Publicaciones, actividades y eventos.</li>
+      <li>Actualización de perfiles y carga de imágenes.</li>
+    </ul>
+    <p>
+      El documento presenta el diseño desde una perspectiva arquitectónica, lógica, de componentes,
+      de datos y de experiencia de usuario.
+    </p>
+  </section>
+
+  <section id="sec1-4">
+    <h3>1.4 Reference Material</h3>
+    <ul>
+      <li>Documento de Requerimientos del Sistema EDI-301.</li>
+      <li>Diseño de Arquitectura de Software EDI-301.</li>
+      <li>Base de datos SQL Server — Modelo Entidad-Relación.</li>
+      <li>Código fuente del backend en Node.js/Express.</li>
+      <li>Código fuente del frontend en Flutter.</li>
+      <li>Guía de estándares de desarrollo de la Universidad Linda Vista.</li>
+      <li>Pressman, R. (2014). <em>Ingeniería de Software</em>.</li>
+      <li>Documentación oficial de Flutter (Google).</li>
+      <li>Documentación oficial de Express.js.</li>
+    </ul>
+  </section>
+
+  <section id="sec1-5">
+    <h3>1.5 Definitions and Acronyms</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Acrónimo</th>
+          <th>Definición</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EDI</td>
+          <td>Equipos de Desarrollo Integral (programa institucional)</td>
+        </tr>
+        <tr>
+          <td>API</td>
+          <td>Application Programming Interface</td>
+        </tr>
+        <tr>
+          <td>DTO</td>
+          <td>Data Transfer Object</td>
+        </tr>
+        <tr>
+          <td>JWT</td>
+          <td>JSON Web Token</td>
+        </tr>
+        <tr>
+          <td>UI</td>
+          <td>User Interface</td>
+        </tr>
+        <tr>
+          <td>UX</td>
+          <td>User Experience</td>
+        </tr>
+        <tr>
+          <td>SQL</td>
+          <td>Structured Query Language</td>
+        </tr>
+        <tr>
+          <td>REST</td>
+          <td>Representational State Transfer</td>
+        </tr>
+        <tr>
+          <td>CRUD</td>
+          <td>Create, Read, Update, Delete</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+<section id="sec2">
+  <h2>2.0 SYSTEM OVERVIEW</h2>
+  <p>
+    El sistema EDI-301 consiste en una aplicación móvil que centraliza información del programa EDI
+    para alumnos y colaboradores. La app se conecta a un backend REST que gestiona la autenticación,
+    datos de usuarios, familias, publicaciones y eventos.
+  </p>
+  <p>
+    El usuario interactúa con pantallas móviles diseñadas en Flutter; estas consumen servicios del
+    backend, el cual ejecuta la lógica de negocio y persiste la información en SQL Server.
+  </p>
+</section>
+
+<section id="sec3">
+  <h2>3.0 SYSTEM ARCHITECTURE</h2>
+
+  <section id="sec3-1">
+    <h3>3.1 Architectural Design</h3>
+    <p>La solución adopta una arquitectura de <strong>tres capas</strong>:</p>
+    <ul>
+      <li>
+        <strong>Capa de Presentación (Flutter)</strong><br />
+        Maneja pantallas, navegación, formularios, validaciones y componentes gráficos.
+      </li>
+      <li>
+        <strong>Capa de Aplicación / API REST (Node.js + Express)</strong><br />
+        Expone endpoints, procesa lógica de negocio, administra autenticación JWT y controla el flujo de datos.
+      </li>
+      <li>
+        <strong>Capa de Datos (SQL Server)</strong><br />
+        Contiene tablas, relaciones, vistas y procedimientos almacenados.
+      </li>
+    </ul>
+    <p>
+      Se asegura escalabilidad y mantenibilidad mediante patrón MVC en el backend, repositorios,
+      uso de DTOs, validadores y manejo estructurado de controladores.
+    </p>
+  </section>
+
+  <section id="sec3-2">
+    <h3>3.2 Decomposition Description</h3>
+    <h4>3.2.1 Módulo de Autenticación</h4>
+    <ul>
+      <li>Inicio de sesión.</li>
+      <li>Validación de credenciales.</li>
+      <li>Generación y gestión de <code>session_token</code> (JWT).</li>
+      <li>Middleware <code>verifyToken</code> para proteger rutas.</li>
+    </ul>
+
+    <h4>3.2.2 Módulo de Familias</h4>
+    <ul>
+      <li>Consulta de la familia asociada a cada usuario.</li>
+      <li>Gestión de roles dentro de la familia (padre, hijo, externo).</li>
+      <li>Edición de imágenes de perfil y portada de la familia.</li>
+      <li>Actualización de datos básicos de la familia.</li>
+    </ul>
+
+    <h4>3.2.3 Módulo de Publicaciones</h4>
+    <ul>
+      <li>Creación de publicaciones asociadas a familias o al programa.</li>
+      <li>Gestión de contenido multimedia (imágenes).</li>
+      <li>Extensible a likes y comentarios.</li>
+    </ul>
+
+    <h4>3.2.4 Módulo de Noticias</h4>
+    <ul>
+      <li>Visualización general de noticias del programa EDI-301.</li>
+      <li>Posible filtrado por familia, fecha o categoría.</li>
+    </ul>
+
+    <h4>3.2.5 Módulo de Eventos</h4>
+    <ul>
+      <li>Calendarización de eventos EDI (reuniones, convivencias, etc.).</li>
+      <li>Registro de asistencia.</li>
+      <li>Consulta desde la app móvil.</li>
+    </ul>
+  </section>
+
+  <section id="sec3-3">
+    <h3>3.3 Design Rationale</h3>
+    <p>Las decisiones de diseño se basaron en:</p>
+    <ul>
+      <li>Compatibilidad multiplataforma: uso de Flutter para Android e iOS.</li>
+      <li>Rendimiento y escalabilidad: Node.js para el backend.</li>
+      <li>Robustez y facilidad de despliegue: SQL Server como gestor de base de datos.</li>
+      <li>Seguridad: uso de JWT, middlewares de autorización y validaciones en el backend.</li>
+      <li>Simplicidad de mantenimiento: separación por capas, uso de controladores, servicios y repositorios.</li>
+    </ul>
+  </section>
+</section>
+
+<section id="sec4">
+  <h2>4.0 DATA DESIGN</h2>
+
+  <section id="sec4-1">
+    <h3>4.1 Data Description</h3>
+    <p>
+      El sistema utiliza una estructura centralizada de datos basada en los siguientes dominios:
+    </p>
+    <ul>
+      <li>Usuarios.</li>
+      <li>Familias.</li>
+      <li>Roles dentro de la familia.</li>
+      <li>Eventos.</li>
+      <li>Publicaciones.</li>
+      <li>Tokens de autenticación.</li>
+      <li>Imágenes (rutas o URLs de almacenamiento).</li>
+    </ul>
+  </section>
+
+  <section id="sec4-2">
+    <h3>4.2 Data Dictionary</h3>
+    <p>
+      A continuación se muestra un ejemplo de diccionario de datos. Puede ampliarse con todas las tablas
+      definidas en la base de datos EDI-301.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Tabla</th>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Users</td>
+          <td>user_id</td>
+          <td>INT (PK)</td>
+          <td>Identificador único del usuario.</td>
+        </tr>
+        <tr>
+          <td>Users</td>
+          <td>name</td>
+          <td>VARCHAR(100)</td>
+          <td>Nombre completo del usuario.</td>
+        </tr>
+        <tr>
+          <td>Users</td>
+          <td>email</td>
+          <td>VARCHAR(200)</td>
+          <td>Correo electrónico institucional.</td>
+        </tr>
+        <tr>
+          <td>Users</td>
+          <td>password</td>
+          <td>VARCHAR(MAX)</td>
+          <td>Hash de la contraseña (por ejemplo, SHA-256).</td>
+        </tr>
+        <tr>
+          <td>Family</td>
+          <td>family_id</td>
+          <td>INT (PK)</td>
+          <td>Identificador único de la familia EDI.</td>
+        </tr>
+        <tr>
+          <td>Family</td>
+          <td>profile_img</td>
+          <td>VARCHAR(MAX)</td>
+          <td>Ruta o URL de la imagen de perfil de la familia.</td>
+        </tr>
+        <tr>
+          <td>Family</td>
+          <td>cover_img</td>
+          <td>VARCHAR(MAX)</td>
+          <td>Ruta o URL de la imagen de portada de la familia.</td>
+        </tr>
+        <tr>
+          <td>Events</td>
+          <td>event_id</td>
+          <td>INT (PK)</td>
+          <td>Identificador del evento.</td>
+        </tr>
+        <tr>
+          <td>Publications</td>
+          <td>publication_id</td>
+          <td>INT (PK)</td>
+          <td>Identificador de la publicación.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+<section id="sec5">
+  <h2>5.0 COMPONENT DESIGN</h2>
+  <h3>5.1 Componentes Backend</h3>
+  <ul>
+    <li>
+      <strong>Controladores:</strong>
+      <ul>
+        <li><code>auth.controller.js</code></li>
+        <li><code>family.controller.js</code></li>
+        <li><code>events.controller.js</code></li>
+        <li><code>publications.controller.js</code></li>
+      </ul>
+    </li>
+    <li>
+      <strong>Middlewares:</strong>
+      <ul>
+        <li><code>verifyToken.js</code> (protección de rutas con JWT).</li>
+        <li><code>uploadMiddleware.js</code> (gestión de carga de imágenes).</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Modelos y Repositorios:</strong>
+      <ul>
+        <li>Abstracción de consultas SQL.</li>
+        <li>Manejo centralizado de errores.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>5.2 Componentes Frontend (Flutter)</h3>
+  <ul>
+    <li>Providers (gestión de estado).</li>
+    <li>Services (consumo de API REST).</li>
+    <li>Pages (pantallas principales: Login, Noticias, Familia, Eventos, etc.).</li>
+    <li>Widgets reutilizables (tarjetas, botones, formularios).</li>
+    <li>DTOs para mapear las respuestas de la API.</li>
+  </ul>
+</section>
+
+<section id="sec6">
+  <h2>6.0 HUMAN INTERFACE DESIGN</h2>
+
+  <section id="sec6-1">
+    <h3>6.1 Overview of User Interface</h3>
+    <p>
+      La interfaz de usuario se diseñó siguiendo criterios de UX moderna, priorizando:
+    </p>
+    <ul>
+      <li>Simplicidad visual y consistencia entre pantallas.</li>
+      <li>Navegación inferior intuitiva (bottom navigation bar).</li>
+      <li>Uso de colores institucionales de la Universidad Linda Vista.</li>
+      <li>Presentación de información mediante tarjetas (cards) y listas.</li>
+      <li>Visibilidad de los elementos más importantes (noticias, familia, eventos).</li>
+    </ul>
+  </section>
+
+  <section id="sec6-2">
+    <h3>6.2 Screen Images</h3>
+    <p>
+      En esta sección se incluyen las imágenes de las pantallas principales de la aplicación.
+      (Sustituye las rutas de ejemplo por las imágenes reales de tu proyecto).
+    </p>
+    <figure>
+      <img src="img/login.png" alt="Pantalla de inicio de sesión" style="max-width:100%;" />
+      <figcaption>Figura 1: Pantalla de inicio de sesión.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/home_noticias.png" alt="Pantalla de noticias" style="max-width:100%;" />
+      <figcaption>Figura 2: Pantalla principal de noticias.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/familia.png" alt="Pantalla de familia EDI" style="max-width:100%;" />
+      <figcaption>Figura 3: Vista de familia EDI.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/editar_familia.png" alt="Pantalla de edición de familia" style="max-width:100%;" />
+      <figcaption>Figura 4: Pantalla de edición de perfil y portada de familia.</figcaption>
+    </figure>
+  </section>
+
+  <section id="sec6-3">
+    <h3>6.3 Screen Objects and Actions</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pantalla</th>
+          <th>Objeto</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Login</td>
+          <td>Botón &quot;Iniciar sesión&quot;</td>
+          <td>Valida credenciales y solicita token al backend.</td>
+        </tr>
+        <tr>
+          <td>Login</td>
+          <td>Campos de correo y contraseña</td>
+          <td>Captura de datos con validación de formato.</td>
+        </tr>
+        <tr>
+          <td>Familia</td>
+          <td>Botón &quot;Editar perfil&quot;</td>
+          <td>Abre pantalla de edición de familia.</td>
+        </tr>
+        <tr>
+          <td>Editor de familia</td>
+          <td>Botón &quot;Guardar cambios&quot;</td>
+          <td>
+            Envía los datos e imágenes al backend mediante una petición
+            <code>PUT</code> o <code>POST</code> al endpoint correspondiente.
+          </td>
+        </tr>
+        <tr>
+          <td>Publicaciones</td>
+          <td>Botón flotante (FAB)</td>
+          <td>Abre formulario para crear una nueva publicación.</td>
+        </tr>
+        <tr>
+          <td>Eventos</td>
+          <td>Lista de eventos</td>
+          <td>Permite consultar la información y detalles de cada evento.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+<section id="sec7">
+  <h2>7.0 REQUIREMENTS MATRIX</h2>
+  <p>
+    La matriz de requerimientos relaciona cada requisito con los componentes de diseño
+    y las actividades de verificación o prueba asociadas.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Req ID</th>
+        <th>Descripción</th>
+        <th>Componente</th>
+        <th>Verificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>RF-01</td>
+        <td>El sistema debe permitir iniciar sesión a usuarios registrados.</td>
+        <td><code>auth.controller.js</code>, pantalla Login (Flutter).</td>
+        <td>Prueba funcional de inicio de sesión; prueba de validación de credenciales.</td>
+      </tr>
+      <tr>
+        <td>RF-03</td>
+        <td>El sistema debe permitir la edición de información de la familia EDI.</td>
+        <td><code>family.controller.js</code>, pantalla Familia y Editor de Familia.</td>
+        <td>Pruebas de actualización de datos e imágenes; verificación en base de datos.</td>
+      </tr>
+      <tr>
+        <td>RF-05</td>
+        <td>El sistema debe permitir la creación de publicaciones.</td>
+        <td><code>publications.controller.js</code>, pantalla de Publicaciones.</td>
+        <td>Pruebas de creación de publicación, visualización y validación de campos obligatorios.</td>
+      </tr>
+      <tr>
+        <td>RNF-02</td>
+        <td>El tiempo de respuesta de la app no debe exceder los 3 segundos en operaciones habituales.</td>
+        <td>Flutter UI + API REST (Node.js).</td>
+        <td>Pruebas de rendimiento y tiempos de respuesta bajo carga moderada.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Esta tabla puede ampliarse con todos los requerimientos funcionales y no funcionales definidos
+    en el documento de requisitos.
+  </p>
+</section>
+
+<section id="sec8">
+  <h2>8.0 APPENDICES</h2>
+  <p>
+    En los apéndices se pueden incluir materiales de soporte que complementan el diseño detallado:
+  </p>
+  <ul>
+    <li>Pseudocódigos de algoritmos clave.</li>
+    <li>Diagramas UML adicionales (clases, secuencia, componentes).</li>
+    <li>Definiciones completas de las tablas y scripts SQL.</li>
+    <li>Ejemplos de peticiones y respuestas JSON de la API.</li>
+    <li>Resultados de pruebas funcionales y de rendimiento.</li>
+    <li>Diagramas de navegación de la aplicación móvil.</li>
+  </ul>
+</section>
+
+</body>
+</html>
