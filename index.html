@@ -78,47 +78,47 @@
 <nav>
   <h2>Índice</h2>
   <ul>
-    <li><a href="#sec1">1. INTRODUCTION</a>
+    <li><a href="#sec1">1. INTRODUCCIÓN</a>
       <ul>
-        <li><a href="#sec1-1">1.1 Purpose</a></li>
-        <li><a href="#sec1-2">1.2 Scope</a></li>
-        <li><a href="#sec1-3">1.3 Overview</a></li>
-        <li><a href="#sec1-4">1.4 Reference Material</a></li>
-        <li><a href="#sec1-5">1.5 Definitions and Acronyms</a></li>
+        <li><a href="#sec1-1">1.1 Propósito</a></li>
+        <li><a href="#sec1-2">1.2 Alcance</a></li>
+        <li><a href="#sec1-3">1.3 Descripción general</a></li>
+        <li><a href="#sec1-4">1.4 Material de referencia</a></li>
+        <li><a href="#sec1-5">1.5 Definiciones y acrónimos</a></li>
       </ul>
     </li>
-    <li><a href="#sec2">2.0 SYSTEM OVERVIEW</a></li>
-    <li><a href="#sec3">3.0 SYSTEM ARCHITECTURE</a>
+    <li><a href="#sec2">2.0 DESCRIPCIÓN GENERAL DEL SISTEMA</a></li>
+    <li><a href="#sec3">3.0 ARQUITECTURA DEL SISTEMA</a>
       <ul>
-        <li><a href="#sec3-1">3.1 Architectural Design</a></li>
-        <li><a href="#sec3-2">3.2 Decomposition Description</a></li>
-        <li><a href="#sec3-3">3.3 Design Rationale</a></li>
+        <li><a href="#sec3-1">3.1 Diseño arquitectónico</a></li>
+        <li><a href="#sec3-2">3.2 Descripción de la descomposición</a></li>
+        <li><a href="#sec3-3">3.3 Justificación del diseño</a></li>
       </ul>
     </li>
-    <li><a href="#sec4">4.0 DATA DESIGN</a>
+    <li><a href="#sec4">4.0 DISEÑO DE DATOS</a>
       <ul>
-        <li><a href="#sec4-1">4.1 Data Description</a></li>
-        <li><a href="#sec4-2">4.2 Data Dictionary</a></li>
+        <li><a href="#sec4-1">4.1 Descripción de datos</a></li>
+        <li><a href="#sec4-2">4.2 Diccionario de datos</a></li>
       </ul>
     </li>
-    <li><a href="#sec5">5.0 COMPONENT DESIGN</a></li>
-    <li><a href="#sec6">6.0 HUMAN INTERFACE DESIGN</a>
+    <li><a href="#sec5">5.0 DISEÑO DE COMPONENTES</a></li>
+    <li><a href="#sec6">6.0 DISEÑO DE INTERFAZ HUMANA</a>
       <ul>
-        <li><a href="#sec6-1">6.1 Overview of User Interface</a></li>
-        <li><a href="#sec6-2">6.2 Screen Images</a></li>
-        <li><a href="#sec6-3">6.3 Screen Objects and Actions</a></li>
+        <li><a href="#sec6-1">6.1 Descripción general de la interfaz de usuario</a></li>
+        <li><a href="#sec6-2">6.2 Imágenes de pantallas</a></li>
+        <li><a href="#sec6-3">6.3 Objetos de pantalla y acciones</a></li>
       </ul>
     </li>
-    <li><a href="#sec7">7.0 REQUIREMENTS MATRIX</a></li>
-    <li><a href="#sec8">8.0 APPENDICES</a></li>
+    <li><a href="#sec7">7.0 MATRIZ DE REQUERIMIENTOS</a></li>
+    <li><a href="#sec8">8.0 APÉNDICES</a></li>
   </ul>
 </nav>
 
 <section id="sec1">
-  <h2>1. INTRODUCTION</h2>
+  <h2>1. INTRODUCCIÓN</h2>
 
   <section id="sec1-1">
-    <h3>1.1 Purpose</h3>
+    <h3>1.1 Propósito</h3>
     <p>
       El propósito de este documento es describir detalladamente el diseño interno del sistema
       <strong>EDI-301</strong>, incluyendo la estructura lógica, componentes funcionales, diseño de datos,
@@ -129,10 +129,10 @@
   </section>
 
   <section id="sec1-2">
-    <h3>1.2 Scope</h3>
+    <h3>1.2 Alcance</h3>
     <p>
       El documento cubre el diseño del sistema móvil (Android/iOS) desarrollado en
-      <strong>Flutter</strong> y su integración con el backend REST API construido con
+      <strong>Flutter</strong> y su integración con el backend API REST construido con
       <strong>Node.js/Express</strong> y <strong>SQL Server</strong>. Incluye las vistas, modelos,
       flujos internos, estructuras de datos, endpoints de la API, reglas de negocio y diagramas
       relevantes para la implementación.
@@ -140,7 +140,7 @@
   </section>
 
   <section id="sec1-3">
-    <h3>1.3 Overview</h3>
+    <h3>1.3 Descripción general</h3>
     <p>
       El sistema EDI-301 automatiza la gestión del programa institucional de familias EDI de la
       Universidad Linda Vista, abarcando:
@@ -159,7 +159,7 @@
   </section>
 
   <section id="sec1-4">
-    <h3>1.4 Reference Material</h3>
+    <h3>1.4 Material de referencia</h3>
     <ul>
       <li>Documento de Requerimientos del Sistema EDI-301.</li>
       <li>Diseño de Arquitectura de Software EDI-301.</li>
@@ -174,7 +174,7 @@
   </section>
 
   <section id="sec1-5">
-    <h3>1.5 Definitions and Acronyms</h3>
+    <h3>1.5 Definiciones y acrónimos</h3>
     <table>
       <thead>
         <tr>
@@ -189,11 +189,11 @@
         </tr>
         <tr>
           <td>API</td>
-          <td>Application Programming Interface</td>
+          <td>Interfaz de Programación de Aplicaciones</td>
         </tr>
         <tr>
           <td>DTO</td>
-          <td>Data Transfer Object</td>
+          <td>Objeto de Transferencia de Datos</td>
         </tr>
         <tr>
           <td>JWT</td>
@@ -201,23 +201,23 @@
         </tr>
         <tr>
           <td>UI</td>
-          <td>User Interface</td>
+          <td>Interfaz de Usuario</td>
         </tr>
         <tr>
           <td>UX</td>
-          <td>User Experience</td>
+          <td>Experiencia de Usuario</td>
         </tr>
         <tr>
           <td>SQL</td>
-          <td>Structured Query Language</td>
+          <td>Lenguaje de Consulta Estructurada</td>
         </tr>
         <tr>
           <td>REST</td>
-          <td>Representational State Transfer</td>
+          <td>Transferencia de Estado Representacional</td>
         </tr>
         <tr>
           <td>CRUD</td>
-          <td>Create, Read, Update, Delete</td>
+          <td>Crear, Leer, Actualizar, Eliminar</td>
         </tr>
       </tbody>
     </table>
@@ -225,7 +225,7 @@
 </section>
 
 <section id="sec2">
-  <h2>2.0 SYSTEM OVERVIEW</h2>
+  <h2>2.0 DESCRIPCIÓN GENERAL DEL SISTEMA</h2>
   <p>
     El sistema EDI-301 consiste en una aplicación móvil que centraliza información del programa EDI
     para alumnos y colaboradores. La app se conecta a un backend REST que gestiona la autenticación,
@@ -238,10 +238,10 @@
 </section>
 
 <section id="sec3">
-  <h2>3.0 SYSTEM ARCHITECTURE</h2>
+  <h2>3.0 ARQUITECTURA DEL SISTEMA</h2>
 
   <section id="sec3-1">
-    <h3>3.1 Architectural Design</h3>
+    <h3>3.1 Diseño arquitectónico</h3>
     <p>La solución adopta una arquitectura de <strong>tres capas</strong>:</p>
     <ul>
       <li>
@@ -264,7 +264,7 @@
   </section>
 
   <section id="sec3-2">
-    <h3>3.2 Decomposition Description</h3>
+    <h3>3.2 Descripción de la descomposición</h3>
     <h4>3.2.1 Módulo de Autenticación</h4>
     <ul>
       <li>Inicio de sesión.</li>
@@ -303,7 +303,7 @@
   </section>
 
   <section id="sec3-3">
-    <h3>3.3 Design Rationale</h3>
+    <h3>3.3 Justificación del diseño</h3>
     <p>Las decisiones de diseño se basaron en:</p>
     <ul>
       <li>Compatibilidad multiplataforma: uso de Flutter para Android e iOS.</li>
@@ -316,10 +316,10 @@
 </section>
 
 <section id="sec4">
-  <h2>4.0 DATA DESIGN</h2>
+  <h2>4.0 DISEÑO DE DATOS</h2>
 
   <section id="sec4-1">
-    <h3>4.1 Data Description</h3>
+    <h3>4.1 Descripción de datos</h3>
     <p>
       El sistema utiliza una estructura centralizada de datos basada en los siguientes dominios:
     </p>
@@ -335,7 +335,7 @@
   </section>
 
   <section id="sec4-2">
-    <h3>4.2 Data Dictionary</h3>
+    <h3>4.2 Diccionario de datos</h3>
     <p>
       A continuación se muestra un ejemplo de diccionario de datos. Puede ampliarse con todas las tablas
       definidas en la base de datos EDI-301.
@@ -410,7 +410,7 @@
 </section>
 
 <section id="sec5">
-  <h2>5.0 COMPONENT DESIGN</h2>
+  <h2>5.0 DISEÑO DE COMPONENTES</h2>
   <h3>5.1 Componentes Backend</h3>
   <ul>
     <li>
@@ -440,33 +440,33 @@
 
   <h3>5.2 Componentes Frontend (Flutter)</h3>
   <ul>
-    <li>Providers (gestión de estado).</li>
-    <li>Services (consumo de API REST).</li>
-    <li>Pages (pantallas principales: Login, Noticias, Familia, Eventos, etc.).</li>
+    <li>Proveedores (gestión de estado).</li>
+    <li>Servicios (consumo de API REST).</li>
+    <li>Páginas (pantallas principales: Inicio de sesión, Noticias, Familia, Eventos, etc.).</li>
     <li>Widgets reutilizables (tarjetas, botones, formularios).</li>
     <li>DTOs para mapear las respuestas de la API.</li>
   </ul>
 </section>
 
 <section id="sec6">
-  <h2>6.0 HUMAN INTERFACE DESIGN</h2>
+  <h2>6.0 DISEÑO DE INTERFAZ HUMANA</h2>
 
   <section id="sec6-1">
-    <h3>6.1 Overview of User Interface</h3>
+    <h3>6.1 Descripción general de la interfaz de usuario</h3>
     <p>
       La interfaz de usuario se diseñó siguiendo criterios de UX moderna, priorizando:
     </p>
     <ul>
       <li>Simplicidad visual y consistencia entre pantallas.</li>
-      <li>Navegación inferior intuitiva (bottom navigation bar).</li>
+      <li>Navegación inferior intuitiva (barra de navegación inferior).</li>
       <li>Uso de colores institucionales de la Universidad Linda Vista.</li>
-      <li>Presentación de información mediante tarjetas (cards) y listas.</li>
+      <li>Presentación de información mediante tarjetas y listas.</li>
       <li>Visibilidad de los elementos más importantes (noticias, familia, eventos).</li>
     </ul>
   </section>
 
   <section id="sec6-2">
-    <h3>6.2 Screen Images</h3>
+    <h3>6.2 Imágenes de pantallas</h3>
     <p>
       En esta sección se incluyen las imágenes de las pantallas principales de la aplicación.
       (Sustituye las rutas de ejemplo por las imágenes reales de tu proyecto).
@@ -490,7 +490,7 @@
   </section>
 
   <section id="sec6-3">
-    <h3>6.3 Screen Objects and Actions</h3>
+    <h3>6.3 Objetos de pantalla y acciones</h3>
     <table>
       <thead>
         <tr>
@@ -501,12 +501,12 @@
       </thead>
       <tbody>
         <tr>
-          <td>Login</td>
+          <td>Inicio de sesión</td>
           <td>Botón &quot;Iniciar sesión&quot;</td>
           <td>Valida credenciales y solicita token al backend.</td>
         </tr>
         <tr>
-          <td>Login</td>
+          <td>Inicio de sesión</td>
           <td>Campos de correo y contraseña</td>
           <td>Captura de datos con validación de formato.</td>
         </tr>
@@ -539,7 +539,7 @@
 </section>
 
 <section id="sec7">
-  <h2>7.0 REQUIREMENTS MATRIX</h2>
+  <h2>7.0 MATRIZ DE REQUERIMIENTOS</h2>
   <p>
     La matriz de requerimientos relaciona cada requisito con los componentes de diseño
     y las actividades de verificación o prueba asociadas.
@@ -547,7 +547,7 @@
   <table>
     <thead>
       <tr>
-        <th>Req ID</th>
+        <th>ID Req</th>
         <th>Descripción</th>
         <th>Componente</th>
         <th>Verificación</th>
@@ -557,7 +557,7 @@
       <tr>
         <td>RF-01</td>
         <td>El sistema debe permitir iniciar sesión a usuarios registrados.</td>
-        <td><code>auth.controller.js</code>, pantalla Login (Flutter).</td>
+        <td><code>auth.controller.js</code>, pantalla de inicio de sesión (Flutter).</td>
         <td>Prueba funcional de inicio de sesión; prueba de validación de credenciales.</td>
       </tr>
       <tr>
@@ -587,7 +587,7 @@
 </section>
 
 <section id="sec8">
-  <h2>8.0 APPENDICES</h2>
+  <h2>8.0 APÉNDICES</h2>
   <p>
     En los apéndices se pueden incluir materiales de soporte que complementan el diseño detallado:
   </p>
